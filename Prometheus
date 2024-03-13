@@ -1,0 +1,28 @@
+prometheus
+
+The Prometheus monitoring system and time series database
+
+cd /usr/local/bin/
+wget https://github.com/prometheus/prometheus/releases/download/v2.45.3/prometheus-2.45.3.linux-amd64.tar.gz
+tar -xvzf prometheus-2.45.3.linux-amd64.tar.gz
+mv prometheus-2.45.3.linux-amd64 prometheus 
+
+vi /etc/systemd/system/prometheus.service
+
+unit file
+
+[Unit]
+Description=Prometheus Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/prometheus/prometheus --config.file=/usr/local/bin/prometheus/prometheus.yml
+
+[Install]
+WantedBy=multi-user.target
+
+systemctl daemon-reload
+systemctl start prometheus.service 
+systemctl status prometheus.service
+systemctl enable prometheus.service
